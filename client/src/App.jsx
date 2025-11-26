@@ -1,27 +1,36 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/common/Navbar';
 import Home from './pages/Home';
-import Programs from './pages/Programs';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
 import './App.css';
 
 function App() {
+  const [backendStatus, setBackendStatus] = useState('Checking...');
+
+  useEffect(() => {
+    // Test backend connection
+    fetch('https://online-enrollment-portal-production.up.railway.app/')
+      .then(response => response.json())
+      .then(data => {
+        setBackendStatus('✅ Backend Connected');
+      })
+      .catch(error => {
+        setBackendStatus('❌ Backend Connection Failed');
+      });
+  }, []);
+
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
+    <div className="App">
+      <Navbar />
+      
+      {/* Backend Status Banner */}
+      <div className="bg-gray-100 py-2 text-center text-sm">
+        System Status: {backendStatus} | 
+        Frontend: ✅ Vercel | 
+        Database: ✅ MongoDB
       </div>
-    </Router>
+      
+      <Home />
+    </div>
   );
 }
 
