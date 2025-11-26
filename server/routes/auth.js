@@ -1,18 +1,23 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const User = require('/models/User');
+const User = require('../models/User');  // Make sure this path is correct
 const router = express.Router();
 
 // Generate JWT Token
 const generateToken = (userId) => {
-    return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
+    return jwt.sign({ userId }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30d' });
 };
 
 // @route   POST /api/auth/register
 // @desc    Register a new user
 router.post('/register', async (req, res) => {
     try {
-        const { firstName, lastName, email, password, userType, studentId } = req.body;
+        const { firstName, lastName, email, password } = req.body;
+
+        // Simple validation
+        if (!firstName || !lastName || !email || !password) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
 
         // Check if user exists
         const existingUser = await User.findOne({ email });
@@ -26,8 +31,7 @@ router.post('/register', async (req, res) => {
             lastName,
             email,
             password,
-            userType: userType || 'student',
-            studentId
+            userType: 'student'
         });
 
         await user.save();
@@ -43,11 +47,11 @@ router.post('/register', async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                userType: user.userType,
-                studentId: user.studentId
+                userType: user.userType
             }
         });
     } catch (error) {
+        console.error('Registration error:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
@@ -81,13 +85,18 @@ router.post('/login', async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                userType: user.userType,
-                studentId: user.studentId
+                userType: user.userType
             }
         });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
+});
+
+// Test route
+router.get('/test', (req, res) => {
+    res.json({ message: 'Auth routes working!' });
 });
 
 module.exports = router;
