@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');  // Make sure this path is correct
+const User = require('../models/User');  // Make sure this path is correct
 const router = express.Router();
 
 // Generate JWT Token
