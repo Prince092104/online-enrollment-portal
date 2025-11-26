@@ -3,292 +3,843 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FBC Enrollment Portal</title>
+    <title>FBC - Online Enrollment Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: #1e3c72;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .logo-subtext {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: -5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: #1e3c72;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #1e3c72;
+            border: 2px solid #1e3c72;
+        }
+
+        .btn-login:hover {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .btn-register {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .btn-register:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(rgba(30, 60, 114, 0.8), rgba(42, 82, 152, 0.8)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-hero {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1e3c72;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #1e3c72;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Programs Section */
+        .programs {
+            padding: 100px 0;
+            background: #f8f9fa;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .program-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .program-content {
+            padding: 25px;
+        }
+
+        .program-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .program-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .program-link {
+            color: #1e3c72;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .program-link:hover {
+            text-decoration: underline;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 70px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #ff6b6b;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .contact-info i {
+            color: #ff6b6b;
+            margin-top: 3px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
         }
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+        .social-links a:hover {
+            background: #ff6b6b;
+        }
+
+        .footer-bottom {
             text-align: center;
-            max-width: 600px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 0.9rem;
         }
-        h1 {
-            color: #333;
+
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .auth-header {
+            background: #1e3c72;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        .auth-tab.active {
+            background: white;
+            border-bottom: 3px solid #1e3c72;
+        }
+
+        .auth-form {
+            padding: 30px;
+        }
+
+        .form-group {
             margin-bottom: 20px;
         }
-        .status {
-            color: #28a745;
-            font-size: 18px;
-            margin: 10px 0;
-            padding: 10px;
-            background: #f8f9fa;
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
         }
-        .auth-buttons {
-            margin: 30px 0;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
+
+        .form-group input:focus {
+            border-color: #1e3c72;
+            outline: none;
         }
-        .auth-btn {
-            padding: 12px 24px;
+
+        .auth-submit {
+            width: 100%;
+            padding: 14px;
+            background: #1e3c72;
+            color: white;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
-        .login-btn {
-            background: #667eea;
-            color: white;
+
+        .auth-submit:hover {
+            background: #2a5298;
         }
-        .register-btn {
-            background: #28a745;
-            color: white;
+
+        .auth-footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
         }
-        .auth-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+        .auth-footer a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 600;
         }
-        .info {
-            margin-top: 30px;
-            color: #666;
-            font-size: 14px;
+
+        .auth-footer a:hover {
+            text-decoration: underline;
         }
-        .error-message {
-            background: #fee;
-            color: #c33;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #fcc;
-            margin: 10px 0;
-            display: none;
-        }
-        .success-message {
-            background: #efe;
-            color: #363;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #cfc;
-            margin: 10px 0;
-            display: none;
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-hero {
+                width: 100%;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎓 FBC Enrollment Portal</h1>
-        
-        <div class="status">✅ Frontend: Deployed on Vercel</div>
-        <div class="status">🔧 Backend: Deployed on Railway</div>
-        <div class="status">🗄️ Database: MongoDB Atlas Connected</div>
-        <div class="status">🚀 System: Ready for Enrollment</div>
-        
-        <!-- Authentication Buttons -->
-        <div class="auth-buttons">
-            <button class="auth-btn login-btn" onclick="showAuthModal('login')">
-                Student Login
-            </button>
-            <button class="auth-btn register-btn" onclick="showAuthModal('register')">
-                Student Register
-            </button>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">FBC</div>
+                        <div class="logo-subtext">Future Builders College</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#admissions">Admissions</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-login" onclick="showAuthModal('login')">Student Login</button>
+                    <button class="btn btn-register" onclick="showAuthModal('register')">Enroll Now</button>
+                </div>
+            </div>
         </div>
-        
-        <div class="info">
-            <p><strong>Welcome to FBC Online Enrollment System</strong></p>
-            <p>New students: Click "Student Register" to create your account</p>
-            <p>Returning students: Click "Student Login" to access your portal</p>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Shape Your Future With Quality Education</h1>
+            <p>Future Builders College offers innovative programs designed to prepare students for successful careers in today's competitive world.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-hero btn-primary" onclick="showAuthModal('register')">Start Your Enrollment</button>
+                <button class="btn btn-hero btn-secondary">Explore Programs</button>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose FBC?</h2>
+                <p>We provide exceptional educational experiences that empower students to achieve their dreams.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Expert Faculty</h3>
+                    <p>Learn from industry professionals and academic experts dedicated to your success.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Modern Facilities</h3>
+                    <p>State-of-the-art labs and learning environments with the latest technology.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Career Support</h3>
+                    <p>Comprehensive career services including internships and job placement assistance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs" id="programs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Academic Programs</h2>
+                <p>Explore our diverse range of programs designed to meet industry demands.</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-image" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="program-content">
+                        <h3>Computer Science</h3>
+                        <p>Bachelor of Science in Computer Science with specializations in AI, Cybersecurity, and Software Engineering.</p>
+                        <a href="#" class="program-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1911&q=80');"></div>
+                    <div class="program-content">
+                        <h3>Business Administration</h3>
+                        <p>Develop leadership skills and business acumen for today's global marketplace.</p>
+                        <a href="#" class="program-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image" style="background-image: url('https://images.unsplash.com/photo-1581092921461-eab62e97a780?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="program-content">
+                        <h3>Engineering</h3>
+                        <p>Hands-on programs in Civil, Electrical, and Mechanical Engineering with modern labs.</p>
+                        <a href="#" class="program-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Begin Your Journey?</h2>
+            <p>Join thousands of successful FBC alumni who started their careers with us. Enroll today and take the first step toward your future.</p>
+            <button class="btn btn-hero btn-primary" onclick="showAuthModal('register')">Enroll Now</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Future Builders College</h3>
+                    <p>Committed to excellence in education since 1995. We build futures through knowledge, innovation, and character development.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Academic Programs</a></li>
+                        <li><a href="#admissions">Admissions</a></li>
+                        <li><a href="#about">About FBC</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Education Avenue, Academic City, AC 12345</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>(123) 456-7890</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>admissions@fbc.edu</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Future Builders College. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Auth Modal -->
-    <div id="authModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
-        <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px;">
-            <h2 id="modalTitle">Login</h2>
-            
-            <!-- Messages -->
-            <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message"></div>
-            
-            <form id="authForm">
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="modalTitle">Student Login</h2>
+                <p>Access your student portal</p>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+            </div>
+            <form class="auth-form" id="authForm">
                 <div id="loginForm">
-                    <input type="email" id="loginEmail" placeholder="Email" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
-                    <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
                 </div>
                 <div id="registerForm" style="display: none;">
-                    <input type="text" id="regFirstName" placeholder="First Name" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
-                    <input type="text" id="regLastName" placeholder="Last Name" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
-                    <input type="email" id="regEmail" placeholder="Email" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
-                    <input type="password" id="regPassword" placeholder="Password" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <div class="form-group">
+                        <label for="regFirstName">First Name</label>
+                        <input type="text" id="regFirstName" placeholder="Enter your first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regLastName">Last Name</label>
+                        <input type="text" id="regLastName" placeholder="Enter your last name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required>
+                    </div>
                 </div>
-                <button type="submit" id="submitBtn" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
-                    Submit
-                </button>
+                <button type="submit" class="auth-submit" id="submitBtn">Login</button>
             </form>
-            <button onclick="hideAuthModal()" style="width: 100%; padding: 10px; margin-top: 10px; background: #ccc; border: none; border-radius: 5px; cursor: pointer;">
-                Cancel
-            </button>
+            <div class="auth-footer">
+                <a href="#">Forgot your password?</a>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentFormType = 'login';
-        const BACKEND_URL = 'https://online-enrollment-portal-production.up.railway.app';
-
         // Auth Modal Functions
         function showAuthModal(type) {
-            currentFormType = type;
             const modal = document.getElementById('authModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Reset messages
-            hideMessages();
-            
-            if (type === 'login') {
-                modalTitle.textContent = 'Student Login';
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-                submitBtn.textContent = 'Login';
-                submitBtn.style.background = '#667eea';
-            } else {
-                modalTitle.textContent = 'Student Registration';
-                loginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-                submitBtn.textContent = 'Register';
-                submitBtn.style.background = '#28a745';
-            }
-            
             modal.style.display = 'flex';
+            switchAuthTab(type);
         }
 
         function hideAuthModal() {
-            document.getElementById('authModal').style.display = 'none';
-            // Clear form fields
+            const modal = document.getElementById('authModal');
+            modal.style.display = 'none';
             document.getElementById('authForm').reset();
-            hideMessages();
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-        }
-
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            document.getElementById('errorMessage').style.display = 'none';
-        }
-
-        function hideMessages() {
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        }
-
-        // Handle form submission
-        document.getElementById('authForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
+        function switchAuthTab(type) {
+            const loginTab = document.querySelectorAll('.auth-tab')[0];
+            const registerTab = document.querySelectorAll('.auth-tab')[1];
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const modalTitle = document.getElementById('modalTitle');
             const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.textContent;
-            
-            // Show loading
-            submitBtn.textContent = 'Processing...';
-            submitBtn.disabled = true;
-            hideMessages();
 
-            try {
-                if (currentFormType === 'login') {
-                    // Handle Login
-                    const loginData = {
-                        email: document.getElementById('loginEmail').value,
-                        password: document.getElementById('loginPassword').value
-                    };
+            if (type === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                modalTitle.textContent = 'Student Login';
+                submitBtn.textContent = 'Login';
+            } else {
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                modalTitle.textContent = 'Student Registration';
+                submitBtn.textContent = 'Register';
+            }
+        }
 
-                    const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(loginData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        showSuccess('Login successful! Redirecting...');
-                        setTimeout(() => {
-                            // Redirect to dashboard or show success
-                            alert('Welcome! Dashboard coming soon...');
-                            hideAuthModal();
-                        }, 1500);
-                    } else {
-                        showError(data.message || 'Login failed');
-                    }
-
-                } else {
-                    // Handle Registration
-                    const registerData = {
-                        firstName: document.getElementById('regFirstName').value,
-                        lastName: document.getElementById('regLastName').value,
-                        email: document.getElementById('regEmail').value,
-                        password: document.getElementById('regPassword').value
-                    };
-
-                    const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(registerData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        showSuccess('Registration successful! You can now login.');
-                        setTimeout(() => {
-                            showAuthModal('login');
-                        }, 2000);
-                    } else {
-                        showError(data.message || 'Registration failed');
-                    }
-                }
-            } catch (error) {
-                showError('Network error. Please try again.');
-                console.error('Auth error:', error);
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+        // Close modal when clicking outside
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideAuthModal();
             }
         });
 
-        // Test backend connection on page load
-        window.addEventListener('load', async () => {
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/auth/test`);
-                if (!response.ok) {
-                    console.warn('Backend auth might not be ready yet');
+        // Handle form submission
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Authentication system is being developed. Please check back soon!');
+            hideAuthModal();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
                 }
-            } catch (error) {
-                console.warn('Backend connection test failed');
-            }
+            });
         });
     </script>
 </body>
