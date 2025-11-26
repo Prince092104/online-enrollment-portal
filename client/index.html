@@ -42,6 +42,32 @@
             border-radius: 5px;
             border-left: 4px solid #007bff;
         }
+        .auth-buttons {
+            margin: 30px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .auth-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-btn {
+            background: #667eea;
+            color: white;
+        }
+        .register-btn {
+            background: #28a745;
+            color: white;
+        }
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -53,6 +79,16 @@
         <div class="status">🗄️ Database: MongoDB Atlas Connected</div>
         <div class="status">🚀 System: Ready for Development</div>
         
+        <!-- Authentication Buttons -->
+        <div class="auth-buttons">
+            <button class="auth-btn login-btn" onclick="showAuthModal('login')">
+                Student Login
+            </button>
+            <button class="auth-btn register-btn" onclick="showAuthModal('register')">
+                Student Register
+            </button>
+        </div>
+        
         <div class="backend-status">
             <strong>Backend Status:</strong> 
             <span id="backendStatus">Checking...</span>
@@ -60,7 +96,32 @@
         
         <div style="margin-top: 30px; color: #666;">
             <p><strong>Backend URL:</strong> https://online-enrollment-portal-production.up.railway.app</p>
-            <p><strong>Next Steps:</strong> Building React frontend with enrollment features</p>
+            <p><strong>Next Steps:</strong> Building authentication system</p>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px;">
+            <h2 id="modalTitle">Login</h2>
+            <form id="authForm">
+                <div id="loginForm">
+                    <input type="email" placeholder="Email" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="password" placeholder="Password" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div id="registerForm" style="display: none;">
+                    <input type="text" placeholder="First Name" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="Last Name" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="email" placeholder="Email" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="password" placeholder="Password" required style="width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                    Submit
+                </button>
+            </form>
+            <button onclick="hideAuthModal()" style="width: 100%; padding: 10px; margin-top: 10px; background: #ccc; border: none; border-radius: 5px; cursor: pointer;">
+                Cancel
+            </button>
         </div>
     </div>
 
@@ -76,6 +137,37 @@
                 document.getElementById('backendStatus').textContent = '❌ Connection Failed';
                 document.getElementById('backendStatus').style.color = '#dc3545';
             });
+
+        // Auth Modal Functions
+        function showAuthModal(type) {
+            const modal = document.getElementById('authModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            if (type === 'login') {
+                modalTitle.textContent = 'Student Login';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                modalTitle.textContent = 'Student Registration';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function hideAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        // Handle form submission
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Authentication functionality coming soon!');
+            hideAuthModal();
+        });
     </script>
 </body>
 </html>
